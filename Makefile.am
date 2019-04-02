@@ -1,1 +1,2 @@
+ACLOCAL_AMFLASGS = -I m4
 SUBDIRS = src
