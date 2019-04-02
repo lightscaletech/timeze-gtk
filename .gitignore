@@ -9,3 +9,4 @@ aclocal.m4
 build-aux/*
 libtool
 autom4te.cache
+src/timeze
