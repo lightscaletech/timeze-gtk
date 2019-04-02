@@ -143,9 +143,9 @@ timeze_add_time_window_new(GtkWindow * parent,
 
     TimezeAddTimeWindow * diag =  g_object_new(
         TIMEZE_ADD_TIME_WINDOW_TYPE,
-        "countries-store", store, NULL);
+        "countries-store", store,
+        "transient-for", parent
+        NULL);
 
-
-    gtk_window_set_transient_for(GTK_WINDOW(diag), parent);
     return diag;
 }
