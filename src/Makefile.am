@@ -2,6 +2,7 @@ bin_PROGRAMS = timeze
 
 timeze_SOURCES = \
 	timeze_app.c \
+	timeze_utils.c \
 	timeze_countries_file.c \
 	timeze_countries_loader.c \
 	timeze_countries_dd_store.c \
