@@ -37,6 +37,8 @@ timeze_countries_file_load() {
     path = file_path();
     if(path == NULL) return res;
 
+    if(g_file_test(path, G_FILE_TEST_IS_REGULAR) == FALSE) return NULL;
+
     fd = g_fopen(path, "r");
     while(fgets(cur, limit, fd) != NULL) {
         length = strlen(cur);
@@ -61,7 +63,7 @@ timeze_countries_file_save(GList * list) {
 
     cur = g_list_first(list);
     while(cur != NULL) {
-        line = g_strdup_printf("%s\n", cur->data);
+        line = g_strdup_printf("%s\n", (gchar *) cur->data);
 
         fputs(line, fd);
 

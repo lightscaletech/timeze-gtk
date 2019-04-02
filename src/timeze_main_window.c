@@ -109,6 +109,8 @@ load_times(TimezeMainWindow * win) {
     GList * cur = NULL;
     struct TimezeCountry * country = NULL;
 
+    if(keys == NULL) return;
+
     cur = g_list_first(keys);
     while(cur != NULL) {
         country = timeze_countries_loader_get_country(win->loader, cur->data);
