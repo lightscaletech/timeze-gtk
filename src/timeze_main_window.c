@@ -122,9 +122,19 @@ load_times(TimezeMainWindow * win) {
 }
 
 static void
+set_geometry(TimezeMainWindow * win) {
+    GdkGeometry geom;
+    geom.min_width = 300;
+    geom.min_height = 500;
+    gtk_window_set_geometry_hints(GTK_WINDOW(win), NULL, &geom, GDK_HINT_MIN_SIZE);
+}
+
+static void
 timeze_main_window_init(TimezeMainWindow * win) {
     GtkWidget * btn, * box, * viewport;
     struct TimezeCountry * country = g_new(struct TimezeCountry, 1);
+
+    set_geometry(win);
 
     timeze_countries_file_load();
 
