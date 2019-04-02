@@ -5,6 +5,7 @@ config.log
 *Makefile.in
 stamp-h1
 config*
+m4/*
 aclocal.m4
 build-aux/*
 libtool
