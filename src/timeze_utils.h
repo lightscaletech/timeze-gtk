@@ -6,4 +6,7 @@
 void
 timeze_string_list_free(gpointer);
 
+gchar *
+timeze_get_local_timezone();
+
 #endif
