@@ -47,6 +47,7 @@ timeze_countries_file_load() {
     }
 
     g_free(path);
+    fclose(fd);
     return res;
 }
 
@@ -72,4 +73,5 @@ timeze_countries_file_save(GList * list) {
     }
 
     g_free(path);
+    fclose(fd);
 }
