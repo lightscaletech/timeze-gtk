@@ -3,6 +3,7 @@
 #include "timeze_add_time_window.h"
 #include "timeze_countries_loader.h"
 #include "timeze_countries_file.h"
+#include "timeze_utils.h"
 
 
 struct _TimezeMainWindow {
@@ -28,6 +29,8 @@ save_times(TimezeMainWindow * main) {
     }
 
     timeze_countries_file_save(keys);
+
+    g_list_free_full(keys, timeze_string_list_free);
 }
 
 static void
@@ -101,7 +104,7 @@ tick(gpointer ud) {
 }
 
 static void
-load_countries(TimezeMainWindow * win) {
+load_times(TimezeMainWindow * win) {
     GList * keys = timeze_countries_file_load();
     GList * cur = NULL;
     struct TimezeCountry * country = NULL;
@@ -112,6 +115,8 @@ load_countries(TimezeMainWindow * win) {
         add_time(win, country);
         cur = g_list_next(cur);
     }
+
+    g_list_free_full(keys, timeze_string_list_free);
 }
 
 static void
@@ -146,7 +151,7 @@ timeze_main_window_init(TimezeMainWindow * win) {
 
     g_timeout_add_seconds(3, tick, win);
 
-    load_countries(win);
+    load_times(win);
 
     g_signal_connect(btn, "clicked", G_CALLBACK(add_btn_clicked), win);
 }
