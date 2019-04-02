@@ -131,7 +131,7 @@ set_geometry(TimezeMainWindow * win) {
 
 static void
 timeze_main_window_init(TimezeMainWindow * win) {
-    GtkWidget * btn, * box, * viewport;
+    GtkWidget * btn, * box, * viewport, * scrollwin;
     struct TimezeCountry * country = g_new(struct TimezeCountry, 1);
 
     set_geometry(win);
@@ -145,7 +145,11 @@ timeze_main_window_init(TimezeMainWindow * win) {
     win->times = NULL;
     win->loader = timeze_countries_loader_new();;
 
+    scrollwin = gtk_scrolled_window_new(NULL, NULL);
     viewport = gtk_viewport_new(NULL, NULL);
+
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
+                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     win->timesBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -153,7 +157,8 @@ timeze_main_window_init(TimezeMainWindow * win) {
     win->localTime = timeze_time_widget_new(country, FALSE);
 
     gtk_box_pack_start(GTK_BOX(box), win->localTime, FALSE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(box), viewport, TRUE, TRUE, 0);
+    gtk_container_add(GTK_CONTAINER(scrollwin), viewport);
+    gtk_box_pack_start(GTK_BOX(box), scrollwin, TRUE, TRUE, 0);
     gtk_container_add(GTK_CONTAINER(box), btn);
     gtk_container_add(GTK_CONTAINER(win), box);
 
