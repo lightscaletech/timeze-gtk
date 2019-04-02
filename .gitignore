@@ -1,0 +1,11 @@
+*.o
+*.Po
+config.log
+*Makefile
+*Makefile.in
+stamp-h1
+config*
+aclocal.m4
+build-aux/*
+libtool
+autom4te.cache
