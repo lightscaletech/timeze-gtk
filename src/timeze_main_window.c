@@ -124,8 +124,8 @@ load_times(TimezeMainWindow * win) {
 static void
 set_geometry(TimezeMainWindow * win) {
     GdkGeometry geom;
-    geom.min_width = 300;
-    geom.min_height = 500;
+    geom.min_width = 275;
+    geom.min_height = 350;
     gtk_window_set_geometry_hints(GTK_WINDOW(win), NULL, &geom, GDK_HINT_MIN_SIZE);
 }
 
