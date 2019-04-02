@@ -129,18 +129,26 @@ set_geometry(TimezeMainWindow * win) {
     gtk_window_set_geometry_hints(GTK_WINDOW(win), NULL, &geom, GDK_HINT_MIN_SIZE);
 }
 
+static struct TimezeCountry *
+get_local_country(TimezeMainWindow * win) {
+    struct TimezeCountry * country = NULL;
+    GDateTime * time = g_date_time_new_now_local();
+    GTimeZone * zone = g_date_time_get_timezone(time);
+
+    country = timeze_countries_loader_get_by_tz(
+        win->loader, g_time_zone_get_identifier(zone));
+
+    g_debug("%s", g_time_zone_get_identifier(zone));
+    return country;
+}
+
 static void
 timeze_main_window_init(TimezeMainWindow * win) {
     GtkWidget * btn, * box, * viewport, * scrollwin;
-    struct TimezeCountry * country = g_new(struct TimezeCountry, 1);
 
     set_geometry(win);
 
     timeze_countries_file_load();
-
-    country->name = "United Kingdom";
-    country->code = "UK";
-    country->tz   = "Europe/London";
 
     win->times = NULL;
     win->loader = timeze_countries_loader_new();;
@@ -154,7 +162,7 @@ timeze_main_window_init(TimezeMainWindow * win) {
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     win->timesBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     btn = gtk_button_new_with_label("Add");
-    win->localTime = timeze_time_widget_new(country, FALSE);
+    win->localTime = timeze_time_widget_new(get_local_country(win), FALSE);
 
     gtk_box_pack_start(GTK_BOX(box), win->localTime, FALSE, TRUE, 0);
     gtk_container_add(GTK_CONTAINER(scrollwin), viewport);
