@@ -5,6 +5,7 @@
 struct _TimezeCountriesLoader {
     GObject parent;
     GHashTable * countries;
+    GHashTable * zone_lookup;
     gsize countries_count;
 };
 
@@ -70,6 +71,7 @@ xml_end_elem(GMarkupParseContext *context,
 
     key = timeze_country_hash_key(country);
     g_hash_table_insert(loader->countries, key, country);
+    g_hash_table_insert(loader->zone_lookup, country->tz, country);
 
     loader->countries_count++;
 }
@@ -94,6 +96,7 @@ parse_xml(TimezeCountriesLoader * loader, const gchar * str, gsize size) {
 static void
 timeze_countries_loader_init(TimezeCountriesLoader * loader) {
     loader->countries = g_hash_table_new(g_str_hash, g_str_equal);
+    loader->zone_lookup = g_hash_table_new(g_str_hash, g_str_equal);
 
     GBytes * countries_data;
 
@@ -139,6 +142,13 @@ timeze_countries_loader_get_has_code(TimezeCountriesLoader * loader, gpointer ke
 }
 
 struct TimezeCountry *
-timeze_countries_loader_get_country(TimezeCountriesLoader * loader, gchar * key) {
+timeze_countries_loader_get_country(TimezeCountriesLoader * loader,
+                                    const gchar * key) {
     return g_hash_table_lookup(loader->countries, key);
+}
+
+struct TimezeCountry *
+timeze_countries_loader_get_by_tz(TimezeCountriesLoader * loader,
+                                  const gchar * tz) {
+    return g_hash_table_lookup(loader->zone_lookup, tz);
 }

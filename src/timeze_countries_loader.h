@@ -17,7 +17,10 @@ void timeze_countries_loader_free(TimezeCountriesLoader *);
 gsize timeze_countries_loader_count(TimezeCountriesLoader *);
 GHashTable * timeze_countries_loader_get(TimezeCountriesLoader *);
 struct TimezeCountry * timeze_countries_loader_get_country (
-    TimezeCountriesLoader *, gchar *);
+    TimezeCountriesLoader *, const gchar *);
+struct TimezeCountry * timeze_countries_loader_get_by_tz(
+    TimezeCountriesLoader *, const gchar *);
+
 gboolean timeze_countries_loader_get_has_code(TimezeCountriesLoader *, gpointer);
 gchar * timeze_country_hash_key(struct TimezeCountry *);
 
