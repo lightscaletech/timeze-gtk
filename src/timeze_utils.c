@@ -22,6 +22,7 @@ timeze_get_local_timezone() {
     size_t limit = 100;
     size_t linklen = 0;
     char path[limit];
+    char * tmp;
 
     if(g_file_test("/etc/localtime", G_FILE_TEST_IS_REGULAR)){
         linklen = readlink("/etc/localtime", path, limit);
@@ -37,10 +38,19 @@ timeze_get_local_timezone() {
     }
 
     if(g_file_test("/etc/timezone", G_FILE_TEST_IS_REGULAR)) {
-        g_file_get_contents("/etc/timezone", &timezone, NULL, NULL);
+        g_file_get_contents("/etc/timezone", &tmp, NULL, NULL);
+        timezone = timeze_remove_last_char(tmp);
+        g_free(tmp);
     }
 
 #endif
 
     return timezone;
+}
+
+
+gchar *
+timeze_remove_last_char(const gchar * str) {
+    size_t length = strlen(str);
+    return g_strndup(str, length - 1);
 }

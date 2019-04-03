@@ -9,4 +9,7 @@ timeze_string_list_free(gpointer);
 gchar *
 timeze_get_local_timezone();
 
+gchar *
+timeze_remove_last_char(const gchar *);
+
 #endif

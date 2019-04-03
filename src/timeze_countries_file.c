@@ -1,4 +1,5 @@
 #include "timeze_countries_file.h"
+#include "timeze_utils.h"
 
 #include <glib/gstdio.h>
 #include <sys/stat.h>
@@ -41,8 +42,7 @@ timeze_countries_file_load() {
 
     fd = g_fopen(path, "r");
     while(fgets(cur, limit, fd) != NULL) {
-        length = strlen(cur);
-        key = g_strndup(cur, length - 1);
+        key = timeze_remove_last_char(cur);
         res = g_list_append(res, key);
     }
 
