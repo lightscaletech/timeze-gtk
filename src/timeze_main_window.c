@@ -131,10 +131,14 @@ set_geometry(TimezeMainWindow * win) {
 
 static struct TimezeCountry *
 get_local_country(TimezeMainWindow * win) {
+    struct TimezeCountry * country = NULL;
     gchar * zone = timeze_get_local_timezone();
 
-    return timeze_countries_loader_get_by_tz(
+    country = timeze_countries_loader_get_by_tz(
         win->loader, zone);
+
+    g_free(zone);
+    return country;
 }
 
 static void
