@@ -12,7 +12,7 @@ gchar *
 timeze_get_local_timezone() {
     gchar * timezone = NULL;
 
-#ifndef HAS_GLIB_GET_TIMEZONE
+#ifdef HAS_GLIB_GET_TIMEZONE
     GDateTime * time = g_date_time_new_now_local();
     GTimeZone * zone = g_date_time_get_timezone(time);
     timezone = g_strdup(g_time_zone_get_identifier(zone));
